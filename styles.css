@@ -6,6 +6,11 @@ body {
     color:whitesmoke;
   }
   
+  a {
+    color: whitesmoke; 
+    text-decoration: none;
+  }
+  
   header {
     background-color: #333;
     color: #fff;
