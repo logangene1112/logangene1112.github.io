@@ -37,18 +37,14 @@
         </li>
       </ul>
     </section>
-    <section id="writing">
+    <section id="writing" class="gallery">
       <h2>My Writing</h2>
-      <ul>
-        <li>
+      <div clas="gallery-container">
+      <ul class="gallery-list">
           <img class="writing-img" src="vamp1.png" alt="Project 1">
-        </li>
-        <li>
           <img class="writing-img" src="jfk1.png" alt="Project 1">
-        </li>
-        <li>
           <img class="writing-img" src="fire1.png" alt="Project 1">
-        </li>
+          <img class="writing-img" src="midway.png" alt="Project 1">
       </ul>
     </section>
     <section id="about">
@@ -60,5 +56,41 @@
     <button id="create-art">Create Your Own Art</button>
     <button id="mailing-list">Join Mailing List</button>
   </footer>
+  <script>
+// Inside <script> tags 
+
+const gallery = document.querySelector('.gallery-list');// Width of each item
+
+
+function autoScroll() {
+  if (scrollingForward) {
+    scrollAmount += 10;
+  } else {
+    scrollAmount -= 10;
+  }
+  // Rest of function
+}
+
+
+// Auto scroll function
+function autoScroll() {
+  const itemWidth = 0.5; // Width of each item
+  const scrollIncrement = 10; // Amount to scroll forward or backward
+  scrollAmount += 2; // Scroll by item width
+  gallery.style.transform = `translateX(-${scrollAmount}px)`; // Apply transform
+
+  if (scrollingForward) {
+    // Scroll forward
+    scrollAmount += scrollIncrement;
+  } else {
+    // Scroll backward
+    scrollAmount -= scrollIncrement;
+  }
+}
+
+// Start auto scroll
+autoScroll();
+
+  </script>
 </body>
 </html>
