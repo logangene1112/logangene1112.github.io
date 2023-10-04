@@ -1,101 +1,31 @@
+.carousel-item {
+  max-width: 250px;  /* maximum width */
+  max-height: 250px;  /* maximum height */
+}
+
+.carousel-item img {
+  width: 100%;   /* this will make your images responsive to the container size */
+  object-fit: cover;  /* this will prevent distortion */
+}
+
+.carousel-control-next {
+  right: 71%; /* Adjust this percentage to move the button around */
+}
+
+.carousel-control-next-icon {
+  transform: translateX(-50%); /* Negatively moves the button to the left but keeps the clickable area on the right */
+}
+
 body {
-    background-image: url(https://cdn.midjourney.com/e1d7c4e9-d118-4173-8a75-0bb8dc604012/0_2.png);
-    background-color: black;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    color:whitesmoke;
-  }
-  
-  .gallery-container {
-    width: 50%;
-    overflow: hidden;
-  }
-  
-  .gallery-list {
-    display: flex;
-    width: 1000px; /* Adjust the width based on the number of images */
-    transition: transform 0.3s ease-in-out;
-  }
+  background-color: #333333;
+}
 
-  a {
-    color: whitesmoke; 
-    text-decoration: none;
-  }
-  
-  header {
-    background-color: #333;
-    color: #fff;
-    padding: 1em;
-    text-align: center;
-  }
-  
-  nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  nav li {
-    margin-right: 20px;
-  }
-  
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2em;
-  }
-  
-  section {
-    background-color: #333;
-    padding: 1em;
-    margin-bottom: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  p {
-    margin-bottom: 20px;
-  }
-
-  .writing-img {
-    width: 200px;
-    height: 200px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    animation: fadeIn 3s;
-    }
-
-    .writing-img:hover {
-      transform: scale(1.05);
-      transition: transform 0.3s;
-    }
-    
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;
-      }
-    }
-  
-  footer {
-    background-color: #333;
-    color: #fff;
-    padding: 1em; 
-    text-align: center;}
+.header {
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  font-size: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 10px;
+  margin: 10px;
+}

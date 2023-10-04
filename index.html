@@ -1,96 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#writing">Writing</a></li>
-        <li><a href="#about">About</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section id="home">
-      <h1>Welcome to my portfolio</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, tempore facere. Nesciunt nihil tempore nostrum velit ullam, veritatis quae facilis doloremque soluta at laudantium eos necessitatibus optio. Quidem, modi distinctio?</p>
-      <button id="surprise-me">Surprise me!</button>
-    </section>
-    <section id="projects">
-      <h2>My Work</h2>
-      <ul>
-        <li>
-          <p>Project 1</p>
-        </li>
-        <li>
-          <p>Project 2</p>
-        </li>
-        <li>
-          <p>Project 3</p>
-        </li>
-      </ul>
-    </section>
-    <section id="writing" class="gallery">
-      <h2>My Writing</h2>
-      <div clas="gallery-container">
-      <ul class="gallery-list">
-          <img class="writing-img" src="vamp1.png" alt="Project 1">
-          <img class="writing-img" src="jfk1.png" alt="Project 1">
-          <img class="writing-img" src="fire1.png" alt="Project 1">
-          <img class="writing-img" src="midway.png" alt="Project 1">
-      </ul>
-    </section>
-    <section id="about">
-      <h2>About Me</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam dolor quas minus impedit vel quaerat esse quam sapiente nisi tempora tempore velit hic deleniti rem rerum optio explicabo, reprehenderit officiis.</p>
-    </section>
-  </main>
-  <footer>
-    <button id="create-art">Create Your Own Art</button>
-    <button id="mailing-list">Join Mailing List</button>
-  </footer>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="C:\Users\User\Downloads\anime-master\anime-master\lib\anime.min.js"></script>
+  </head>
+  <body> 
+    <h1 class="header">Welcome</h1>
+    <div id="carouselExampleIndicators" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+        <img src="midway.png" class="d-block" alt="...">
+      </div>
+        <div class="carousel-item">
+        <img src="vamp1.png" class="d-block" alt="...">
+      </div>
+        <div class="carousel-item">
+        <img src="jfk1.png" class="d-block" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div class="svg-attributes-demo">
+    <svg id="mySVG" width="500" height="500">
+        <polygon points="64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100" fill="lime" stroke="purple" stroke-width="1" />
+        <defs>
+            <filter id="myFilter">
+              <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="10" result="turbulence" />
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="1" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+        <polygon id="myPolygon" points="64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100" fill="lime" stroke="purple" stroke-width="1">
+        <path id="motion-path" d="M 64 128 C 64 64 128 0 192 0 C 256 0 320 64 320 128 C 320 192 256 256 192 256 C 128 256 64 192 64 128" fill="none" stroke="none" />
+        <animateMotion xlink:href="#myPolygon" dur="5s" repeatCount="indefinite" rotate="auto">
+          <mpath xlink:href="#motion-path" keyPoints="0;0.25;0.5;0.75;1" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" />
+        </animateMotion>
+    </svg>
+</div>
   <script>
-// Inside <script> tags 
+    document.addEventListener("DOMContentLoaded", function() { 
+      const myCarouselElement = document.querySelector('#carouselExampleIndicators');
 
-const gallery = document.querySelector('.gallery-list');// Width of each item
+      anime({
+        targets: 'h1',
+        translateX: 500,
+        duration: 1500, // Change this value to make the animation slower
+        
+      });
 
+      const polygon = document.querySelector('.svg-attributes-demo polygon');
+      const path = document.querySelector('#motion-path');
 
-function autoScroll() {
-  if (scrollingForward) {
-    scrollAmount += 10;
-  } else {
-    scrollAmount -= 10;
-  }
-  // Rest of function
-}
+      anime({
+  targets: ['.svg-attributes-demo polygon', 'feTurbulence', 'feDisplacementMap'],
+  points: '64 128 8.574 96 8.574 32 64 0 119.426 32 119.426 96',
+  baseFrequency: 0,
+  scale: 1,
+  loop: true,
+  direction: 'alternate',
+  easing: 'easeInOutExpo'
+});
 
-
-// Auto scroll function
-function autoScroll() {
-  const itemWidth = 0.5; // Width of each item
-  const scrollIncrement = 10; // Amount to scroll forward or backward
-  scrollAmount += 2; // Scroll by item width
-  gallery.style.transform = `translateX(-${scrollAmount}px)`; // Apply transform
-
-  if (scrollingForward) {
-    // Scroll forward
-    scrollAmount += scrollIncrement;
-  } else {
-    // Scroll backward
-    scrollAmount -= scrollIncrement;
-  }
-}
-
-// Start auto scroll
-autoScroll();
-
+      const carousel = new bootstrap.Carousel(myCarouselElement, {
+        interval: 2000,
+        touch: true
+      });
+    });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
