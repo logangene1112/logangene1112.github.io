@@ -7,8 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
     <script src="C:\Users\User\Downloads\anime-master\anime-master\lib\anime.min.js"></script>
-  </head>
-  <body> 
+    </head>
+    <body> 
     <h1 class="header">Welcome</h1>
     <div id="carouselExampleIndicators" class="carousel slide">
       <div class="carousel-inner">
@@ -26,24 +26,24 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
-  <div class="svg-attributes-demo">
+    </div>
+    <div class="svg-attributes-demo">
     <svg id="mySVG" width="500" height="500">
-        <polygon points="64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100" fill="lime" stroke="purple" stroke-width="1" />
+        <polygon id="myPolygon" points="100,100 400,100 400,400 100,400" fill="lime" stroke="purple" stroke-width="1" />
         <defs>
             <filter id="myFilter">
-              <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="10" result="turbulence" />
-                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="1" xChannelSelector="R" yChannelSelector="G" />
+              <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="1" result="turbulence" />
+              <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="30" xChannelSelector="R" yChannelSelector="G" />
             </filter>
+            <mask id="myMask">
+              <rect x="0" y="0" width="500" height="500" fill="white" />
+              <circle id="myCircle" cx="250" cy="250" r="0" fill="black" />
+            </mask>
         </defs>
-        <polygon id="myPolygon" points="64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100" fill="lime" stroke="purple" stroke-width="1">
-        <path id="motion-path" d="M 64 128 C 64 64 128 0 192 0 C 256 0 320 64 320 128 C 320 192 256 256 192 256 C 128 256 64 192 64 128" fill="none" stroke="none" />
-        <animateMotion xlink:href="#myPolygon" dur="5s" repeatCount="indefinite" rotate="auto">
-          <mpath xlink:href="#motion-path" keyPoints="0;0.25;0.5;0.75;1" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" />
-        </animateMotion>
+        <path id="motion-path" d="M 100,100 L 250,250 L 400,100 L 250,400 Z" fill="none" mask="url(#myMask)" />
     </svg>
-</div>
-  <script>
+    </div>
+    <script>
     document.addEventListener("DOMContentLoaded", function() { 
       const myCarouselElement = document.querySelector('#carouselExampleIndicators');
 
@@ -56,24 +56,94 @@
 
       const polygon = document.querySelector('.svg-attributes-demo polygon');
       const path = document.querySelector('#motion-path');
+      const filter = document.querySelector('feTurbulence');
+      const displacement = document.querySelector('feDisplacementMap');
+      const circle = document.querySelector('#myCircle');
+      const pathLength = path.getTotalLength();
+      const points = [
+        { x: 100, y: 100 },
+        { x: 400, y: 100 },
+        { x: 400, y: 400 },
+        { x: 100, y: 400 },
+        { x: 100, y: 100 }
+      ];
+      const updatePolygon = function(anim) {
+        const time = anim.currentTime;
+        const point = path.getPointAtLength(time % pathLength);
+        const angle = Math.atan2(point.y - 250, point.x - 250);
+        const radius = Math.min(150, Math.max(50, Math.sin(time / 1000) * 50 + 100));
+        const newPoints = points.map(function(p) {
+          const x = p.x - 250;
+          const y = p.y - 250;
+          const distance = Math.sqrt(x * x + y * y);
+          const newDistance = radius + Math.sin(distance / 50 + time / 1000) * 50;
+          const newAngle = angle + Math.atan2(y, x);
+          return {
+            x: Math.cos(newAngle) * newDistance + 250,
+            y: Math.sin(newAngle) * newDistance + 250
+          };
+        });
+        polygon.setAttribute('points', newPoints.map(function(p) {
+          return p.x + ',' + p.y;
+        }).join(' '));
+      };
+      anime({
+        targets: { progress: 1 },
+        progress: pathLength,
+        duration: 6400, 
+        easing: 'linear',
+        loop: true,
+        update: updatePolygon
+      });
 
       anime({
-  targets: ['.svg-attributes-demo polygon', 'feTurbulence', 'feDisplacementMap'],
-  points: '64 128 8.574 96 8.574 32 64 0 119.426 32 119.426 96',
-  baseFrequency: 0,
-  scale: 1,
-  loop: true,
-  direction: 'alternate',
-  easing: 'easeInOutExpo'
-});
+        targets: filter,
+        baseFrequency: [
+          { value: '0.05', duration: 1000 },
+          { value: '0.1', duration: 1000 },
+          { value: '0.05', duration: 1000 },
+          { value: '0.1', duration: 1000 },
+          { value: '0.05', duration: 1000 },
+          { value: '0.1', duration: 1000 },
+          { value: '0.05', duration: 1000 },
+          { value: '0.1', duration: 1000 },
+          { value: '0.05', duration: 1000 },
+          { value: '0.1', duration: 1000 },
+        ],
+        scale: [
+          { value: '50', duration: 1000 },
+          { value: '100', duration: 1000 },
+          { value: '50', duration: 1000 },
+          { value: '100', duration: 1000 },
+          { value: '50', duration: 1000 },
+          { value: '100', duration: 1000 },
+          { value: '50', duration: 1000 },
+          { value: '100', duration: 1000 },
+          { value: '50', duration: 1000 },
+          { value: '100', duration: 1000 },
+        ],
+        easing: 'easeInOutExpo',
+        loop: true
+      });
+
+      anime({
+        targets: circle,
+        r: [
+          { value: '250', duration: 1000 },
+          { value: '0', duration: 1000 },
+          { value: '250', duration: 1000 },
+        ],
+        easing: 'easeInOutExpo',
+        loop: true
+      });
 
       const carousel = new bootstrap.Carousel(myCarouselElement, {
         interval: 2000,
         touch: true
       });
     });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
-</html>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </body>
+    </html>

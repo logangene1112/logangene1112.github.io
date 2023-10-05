@@ -29,3 +29,19 @@ body {
   padding: 10px;
   margin: 10px;
 }
+
+/* styles.css */
+@keyframes myAnimation {
+  0% {
+      /* Define the starting state of your animation */
+  }
+  100% {
+      /* Define the ending state of your animation */
+  }
+}
+
+.my-svg-element {
+  animation-name: myAnimation;
+  animation-duration: 5s; /* Adjust the duration as needed */
+  animation-iteration-count: infinite;
+}
